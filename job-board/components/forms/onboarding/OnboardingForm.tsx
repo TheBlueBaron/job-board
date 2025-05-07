@@ -5,6 +5,7 @@ import Logo from "@/public/logo.png";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 import { UserTypeSelection } from "./UserTypeForm";
+import { CompanyForm } from "./CompanyForm";
 
 type UserSelectionType = "organisation" | "jobSeeker" | null;
 
@@ -24,7 +25,7 @@ export function OnboardingForm() {
 
       case 2:
         return userType === "organisation" ? (
-          <p>Organisational User</p>
+          <CompanyForm />
         ) : (
           <p>Job Seeker User</p>
         );
