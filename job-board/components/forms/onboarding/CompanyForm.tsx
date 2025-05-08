@@ -21,6 +21,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { countryList } from "@/app/utils/countriesLilst";
+import { Textarea } from "@/components/ui/textarea";
+import { UploadDropzone } from "@/components/general/UploadThingReexport";
 
 export function CompanyForm() {
   const form = useForm<z.infer<typeof companySchema>>({
@@ -91,6 +93,72 @@ export function CompanyForm() {
             )}
           />
         </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            control={form.control}
+            name="website"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Website</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://yourcompany.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="bSkyAccount"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Bluesky Account</FormLabel>
+                <FormControl>
+                  <Input placeholder="@yourcompany" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <FormField
+          control={form.control}
+          name="about"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>About</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Tell us about your organisation..." />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="logo"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Company Logo</FormLabel>
+              <FormControl>
+                <UploadDropzone
+                  endpoint="imageUploader"
+                  onClientUploadComplete={(res) => {
+                    field.onChange(res[0].ufsUrl);
+                  }}
+                  onUploadError={(err) => {
+                    console.warn(`Uploader error: ${err}`);
+                  }}
+                  className="ut-button:bg-primary ut-button:text-white ut-button:hover:bg-primary/90 ut-label:text-muted-foreground ut-allowed-content:text-muted-foreground border-primary"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </form>
     </Form>
   );
